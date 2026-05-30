@@ -149,6 +149,8 @@ activemq-data/
 
 # Environments
 api_key.env
+*.env
+p04_week_project/api_key.env
 .env
 .envrc
 .venv
