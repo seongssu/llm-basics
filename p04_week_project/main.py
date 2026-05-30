@@ -1,5 +1,10 @@
-from keywords import get_emotion
+from keywords import Keywords
+
+keywords = Keywords()
 
 def analyze_sentiment(text: str) -> str:
-    return get_emotion(text)
+    return keywords.get_emotion(text)
     
+def classify_intent(text: str) -> str:
+    return keywords.get_intent(text)
+
