@@ -2,6 +2,7 @@ from keywords import Keywords
 import streamlit as st
 from datetime import datetime
 import pandas as pd
+import plotly.express as px
 
 keywords = Keywords()
 
@@ -118,7 +119,21 @@ if st.session_state.history:
     df = pd.DataFrame(st.session_state.history)
     df["time"] = pd.to_datetime(df["time"])
     df["hour"] = df["time"].dt.hour
-    count = df["hour"].value_counts().sort_index()
-    st.bar_chart(count)    
+    time_count = df["hour"].value_counts().sort_index()
+    st.bar_chart(time_count)    
 else: st.caption("아직 기록이 없습니다.")
 
+st.divider()
+st.subheader("문의 유형 통계")
+if st.session_state.history:
+    df = pd.DataFrame(st.session_state.history)
+    intent_count = df["intent"].value_counts()
+
+    fig = px.pie(
+        values=intent_count.values,
+        names=intent_count.index,
+        title="문의 유형 비율"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+else: st.caption("아직 기록이 없습니다.")
