@@ -19,24 +19,25 @@ def detect_urgent(text: str) -> str:
 
 def make_guide(sentiment: str, intent: str, urgent: str) -> str:
     if intent == "claim":
-        guide = "청구 진행 상태와 필요 서류를 먼저 확인하고 예상 처리 일정을 안내하세요"
+        if urgent == "high":
+            guide = "(긴급) 청구 진행 상태와 필요 서류를 먼저 확인하고 예상 처리 일정을 안내하세요"
+        elif sentiment == "negative":    
+            guide = "(사과 후) 청구 진행 상태와 필요 서류를 먼저 확인하고 예상 처리 일정을 안내하세요" 
+        else: guide = "청구 진행 상태와 필요 서류를 먼저 확인하고 예상 처리 일정을 안내하세요"
     elif intent == "payment":
-        guide = "납입 내역과 자동이체 기록을 확인하고 중복 출금 여부를 검토하세요"
+        if urgent == "high":
+            guide = "(긴급) 납입 내역과 자동이체 기록을 확인하고 중복 출금 여부를 검토하세요"
+        elif sentiment == "negative":    
+            guide = "(사과 후) 납입 내역과 자동이체 기록을 확인하고 중복 출금 여부를 검토하세요" 
+        else: guide = "납입 내역과 자동이체 기록을 확인하고 중복 출금 여부를 검토하세요"        
     elif intent == "cancel":
-        guide = "해지 및 환급 규정을 명확히 설명하고 손해가 없도록 주의 사항을 안내하세요"
+        if urgent == "high":
+            guide = "(긴급) 약관 설명 후 해약 해드리세요!"
+        elif sentiment == "negative":    
+            guide = "(사과 후) 약관 설명하고 해약 해드리세요!" 
+        else: guide = "약관 설명하고 해약 해드리세요!"  
     else:
-        guide = "문의 내용을 다시 확인하고 필요한 추가 정보를 요청하세요"
-    
-    if sentiment == "negative":
-        guide = "불편을 드려 죄송합니다 " + guide
-    elif sentiment == "positive":
-        guide = "문의 주셔서 감사합니다 " + guide
-    
-    if urgent == "high":
-        guide = "긴급도가 높으므로 진상일 수 있습니다. " + guide
-    elif urgent == "medium":    
-        guide = "어조에 신경써주세요. 그에 따라 달라집니다." + guide
-    else: guide = "문의주셔서 감사합니다. " + guide
+        guide = "문의 내용을 다시 확인하고 필요한 추가 정보를 요청하세요"    
     
     return guide
     
