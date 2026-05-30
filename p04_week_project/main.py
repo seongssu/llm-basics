@@ -113,6 +113,12 @@ if st.session_state.history:
 else: st.caption("아직 기록이 없습니다.")
 
 st.divider()
-st.subheader("도전 과제")
-
+st.subheader("상담 시간대별 통계")
+if st.session_state.history:    
+    df = pd.DataFrame(st.session_state.history)
+    df["time"] = pd.to_datetime(df["time"])
+    df["hour"] = df["time"].dt.hour
+    count = df["hour"].value_counts().sort_index()
+    st.bar_chart(count)    
+else: st.caption("아직 기록이 없습니다.")
 
